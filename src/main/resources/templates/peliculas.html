@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Elige tu película favorita</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .movie-card {
+            text-align: center;
+            margin: 10px;
+        }
+        .movie-card img {
+            width: 200px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .movie-card img:hover {
+            transform: scale(1.1);
+            transition: transform 0.75s ease;
+        }
+        .movie-card h5 {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Elige tu película favorita</h1>
+    <div class="row justify-content-center">
+        <div th:each="pelicula : ${peliculas}" class="col-12 col-md-4 movie-card">
+            <form th:action="@{/like}" method="post">
+                <input type="hidden" th:value="${pelicula.nombre}" name="nombrePelicula">
+                <button type="submit" style="border: none; background: none; padding: 0;">
+                    <img th:src="@{/img/{img}(img=${pelicula.imagen})}" th:alt="${pelicula}">
+                </button>
+            </form>
+            <p>❤️ <span th:text="${pelicula.getVotos()}"></span></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
